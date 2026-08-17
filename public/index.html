@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI Commerce Product Research Agent">
+  <title>AI Product Research</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">PK</div>
+      <div>
+        <div class="brand-title">AI Product Research</div>
+        <div class="brand-subtitle">Research · Content · Creative</div>
+      </div>
+    </div>
+    <div id="providerStatus" class="provider-status">Đang kiểm tra providers…</div>
+  </header>
+
+  <main class="shell">
+    <aside class="sidebar">
+      <section class="panel form-panel">
+        <div class="session-manager">
+          <div class="section-heading-row">
+            <div>
+              <div class="eyebrow">Workspace</div>
+              <h2>Research session</h2>
+            </div>
+            <button id="newSession" class="compact-button" type="button">+ New</button>
+          </div>
+          <label for="sessionSelect">Session đã lưu</label>
+          <select id="sessionSelect" aria-label="Chọn research session"></select>
+          <label for="sessionName">Tên session</label>
+          <div class="session-save-row">
+            <input id="sessionName" type="text" maxlength="100" placeholder="Ví dụ: Nghiên cứu giày Erosska">
+            <button id="saveSession" class="compact-button save-button" type="button">Save</button>
+          </div>
+          <div id="sessionMessage" class="session-message" aria-live="polite"></div>
+        </div>
+
+        <div class="panel-divider"></div>
+        <div class="eyebrow">New research</div>
+        <h1>Hiểu sản phẩm trước khi bán.</h1>
+        <p class="muted">Nhập bất kỳ thông tin nào bạn có. Fact chưa xác minh sẽ được giữ là <strong>Unknown</strong>.</p>
+
+        <form id="researchForm">
+          <label for="productName">Tên sản phẩm</label>
+          <input id="productName" name="productName" type="text" maxlength="300" placeholder="Ví dụ: Erosska EL084">
+
+          <label for="additionalInfo">Thông tin bổ sung</label>
+          <textarea id="additionalInfo" name="additionalInfo" rows="5" maxlength="10000" placeholder="Loại sản phẩm, màu, mô tả hoặc thông tin bạn đã biết…"></textarea>
+
+          <label for="productImage">Ảnh sản phẩm</label>
+          <label class="upload-box" for="productImage">
+            <input id="productImage" name="image" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/heic,image/heif">
+            <span class="upload-icon">↑</span>
+            <span id="uploadLabel">Chọn hoặc kéo ảnh vào đây</span>
+            <small id="uploadHint">JPG, PNG, WEBP, HEIC</small>
+          </label>
+          <img id="imagePreview" class="image-preview hidden" alt="Xem trước ảnh sản phẩm">
+
+          <div id="formError" class="form-error hidden"></div>
+          <button id="submitButton" class="primary-button" type="submit">
+            <span>Research product</span>
+            <span aria-hidden="true">→</span>
+          </button>
+        </form>
+      </section>
+
+      <section class="history-section">
+        <div class="section-heading-row">
+          <div>
+            <div class="eyebrow">Saved locally</div>
+            <h2 id="jobListTitle">Product Jobs</h2>
+          </div>
+          <button id="refreshJobs" class="icon-button" type="button" title="Refresh">↻</button>
+        </div>
+        <div id="jobList" class="job-list"><div class="empty-small">Chưa có job.</div></div>
+      </section>
+    </aside>
+
+    <section class="workspace">
+      <div id="emptyState" class="empty-state">
+        <div class="empty-visual">
+          <span></span><span></span><span></span>
+          <div>PK</div>
+        </div>
+        <div class="eyebrow">Single source of truth</div>
+        <h2>Product Knowledge sẽ xuất hiện ở đây.</h2>
+        <p>Tạo một research job để xem agent phân tích, đọc nguồn, đối chiếu và tổng hợp.</p>
+      </div>
+
+      <div id="jobView" class="job-view hidden">
+        <section class="job-header panel">
+          <div>
+            <div class="job-id-row">
+              <span id="jobStatus" class="status-badge">Created</span>
+              <span id="jobId" class="job-id"></span>
+            </div>
+            <h2 id="jobTitle">Product Research</h2>
+            <p id="jobMeta" class="muted"></p>
+          </div>
+          <div class="job-actions">
+            <button id="openReport" class="secondary-button report-button" type="button">Full report</button>
+            <button id="printReport" class="secondary-button report-only hidden" type="button">Print / Save PDF</button>
+            <button id="closeReport" class="secondary-button report-only hidden" type="button">Close report</button>
+            <button id="buildCommerce" class="secondary-button hidden" type="button">Tạo lại content</button>
+            <button id="generateImages" class="secondary-button creative-button hidden" type="button">Generate 4 images</button>
+            <button id="researchAgain" class="secondary-button" type="button">Research again</button>
+          </div>
+        </section>
+
+        <section id="reportOverview" class="panel report-overview hidden" aria-label="Tóm tắt báo cáo"></section>
+
+        <section class="panel progress-panel">
+          <div class="section-heading-row">
+            <div>
+              <div class="eyebrow">Agent activity</div>
+              <h2 id="progressTitle">Progress</h2>
+            </div>
+            <div id="liveIndicator" class="live-indicator hidden"><span></span> Live</div>
+          </div>
+          <div id="progressEvents" class="timeline"></div>
+        </section>
+
+        <div id="errorCard" class="error-card hidden"></div>
+        <div id="knowledgeView" class="knowledge-view hidden"></div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

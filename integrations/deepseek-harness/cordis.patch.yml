@@ -1,0 +1,5 @@
+- insert:
+    - id: commerce-research-tools
+      name: dsh-commerce-research
+      config:
+        appBaseUrl: !!js "process.env.COMMERCE_APP_BASE_URL || 'http://127.0.0.1:3000'"
